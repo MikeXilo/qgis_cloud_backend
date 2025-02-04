@@ -4,10 +4,12 @@ FROM debian:bullseye-slim
 # Set non-interactive mode
 ENV DEBIAN_FRONTEND=noninteractive
 ENV QGIS_PREFIX_PATH="/usr"
+ENV QT_QPA_PLATFORM=offscreen  # Disable X11 GUI requirement
 
-# Install system dependencies
+# Install system dependencies (QGIS without GUI)
 RUN apt update && apt install -y \
-    qgis python3-qgis gdal-bin python3-pip
+    qgis python3-qgis gdal-bin python3-pip \
+    xvfb libgl1-mesa-glx
 
 # Install Python dependencies
 RUN pip3 install flask psycopg2 gevent
